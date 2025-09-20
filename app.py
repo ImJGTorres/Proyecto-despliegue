@@ -8,7 +8,8 @@ from flask_cors import CORS
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DIST_DIR = os.path.join(BASE_DIR, "dist")
-DB_PATH = os.path.join(BASE_DIR, "db.sqlite")
+# Use /tmp for database in production (Render has read-only file system)
+DB_PATH = os.path.join("/tmp", "db.sqlite")
 
 app = Flask(__name__, static_folder=DIST_DIR, static_url_path="/")
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -298,7 +299,9 @@ def spa(path):
     if path and os.path.exists(full): return send_from_directory(DIST_DIR, path)
     return send_from_directory(DIST_DIR, "index.html")
 
+# Initialize database when module is loaded (important for production)
+init_db()
+
 if __name__ == "__main__":
-    init_db()
     port = int(os.environ.get("PORT", "5000"))
     app.run(host="0.0.0.0", port=port)
