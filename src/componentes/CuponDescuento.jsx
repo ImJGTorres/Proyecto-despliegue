@@ -17,7 +17,7 @@ const CUPONES = {
   },
 };
 
-export default function CuponDescuento({ onAplicar }) {
+export default function CuponDescuento({ onAplicar, temaOscuro }) {
   const [cupon, setCupon] = useState("");
   const [mensaje, setMensaje] = useState("");
 
@@ -41,11 +41,19 @@ export default function CuponDescuento({ onAplicar }) {
           placeholder="Cupón de descuento"
           value={cupon}
           onChange={(e) => setCupon(e.target.value)}
-          className="p-2 rounded border border-blue-300 dark:border-purple-400 bg-white dark:bg-stone-800 dark:text-purple-900"
+          className="p-2 rounded border"
+          style={{
+            borderColor: temaOscuro ? "#a855f7" : "#93c5fd",
+            backgroundColor: temaOscuro ? "#374151" : "white",
+            color: temaOscuro ? "#ffffff" : "#000000",
+          }}
         />
         <button
           onClick={handleAplicar}
-          className="bg-blue-600 dark:bg-purple-700 text-white px-4 py-2 rounded"
+          className="text-white px-4 py-2 rounded"
+          style={{
+            backgroundColor: temaOscuro ? "#7c3aed" : "#2563eb",
+          }}
         >
           Aplicar
         </button>

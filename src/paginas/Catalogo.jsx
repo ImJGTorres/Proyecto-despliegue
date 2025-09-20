@@ -8,6 +8,8 @@ export default function Catalogo({
   setBusqueda,
   onAgregar,
   temaOscuro,
+  loading,
+  error,
 }) {
   return (
     <div className="mx-auto mt-8">
@@ -22,11 +24,25 @@ export default function Catalogo({
         onChange={setBusqueda}
         temaOscuro={temaOscuro}
       />
-      <CuadriculaProductos
-        productos={productos}
-        onAgregar={onAgregar}
-        temaOscuro={temaOscuro}
-      />
+      {loading ? (
+        <div className="text-center py-8">
+          <p style={{ color: temaOscuro ? "#c4b5fd" : "#1d4ed8" }}>
+            Cargando productos...
+          </p>
+        </div>
+      ) : error ? (
+        <div className="text-center py-8">
+          <p style={{ color: temaOscuro ? "#ef4444" : "#dc2626" }}>
+            Error al cargar productos: {error}
+          </p>
+        </div>
+      ) : (
+        <CuadriculaProductos
+          productos={productos}
+          onAgregar={onAgregar}
+          temaOscuro={temaOscuro}
+        />
+      )}
     </div>
   );
 }

@@ -58,7 +58,9 @@ export default function Pago({
       </h2>
       <ul className="mb-4">
         {carrito.length === 0 ? (
-          <p className="text-gray-500 dark:text-purple-200">
+          <p
+            style={{ color: temaOscuro ? "#c4b5fd" : "#6b7280" }}
+          >
             No hay productos en el carrito.
           </p>
         ) : (
@@ -79,18 +81,27 @@ export default function Pago({
         <span className="font-semibold">Subtotal:</span> $
         {subtotal.toLocaleString("es")}
       </div>
-      <CuponDescuento onAplicar={onAplicarCupon} />
+      <CuponDescuento onAplicar={onAplicarCupon} temaOscuro={temaOscuro} />
       {descuento > 0 && (
-        <div className="mb-2 text-green-700 dark:text-green-300 text-center">
+        <div
+          className="mb-2 text-center"
+          style={{ color: temaOscuro ? "#86efac" : "#047857" }}
+        >
           Cupón aplicado: -${descuento.toLocaleString("es")}
         </div>
       )}
       {envioGratis && (
-        <div className="mb-2 text-blue-700 dark:text-blue-300 text-center">
+        <div
+          className="mb-2 text-center"
+          style={{ color: temaOscuro ? "#93c5fd" : "#1d4ed8" }}
+        >
           ¡Envío gratis aplicado!
         </div>
       )}
-      <h3 className="text-lg font-semibold text-blue-700 dark:text-purple-300 mt-4 text-center">
+      <h3
+        className="text-lg font-semibold mt-4 text-center"
+        style={{ color: temaOscuro ? "#c4b5fd" : "#1d4ed8" }}
+      >
         Total a pagar: ${total.toLocaleString("es")}
       </h3>
 

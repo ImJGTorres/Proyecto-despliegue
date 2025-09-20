@@ -6,6 +6,8 @@ export default function Encabezado({
   onNavegar,
   paginaActual,
   cantidadCarrito,
+  rolUsuario,
+  onCambiarRol,
 }) {
   return (
     <header
@@ -15,7 +17,34 @@ export default function Encabezado({
         borderColor: temaOscuro ? "#a855f7" : "#3b82f6",
       }}
     >
+      {/* Indicador de rol */}
+      <div className="flex items-center gap-2">
+        <span
+          className="text-sm font-medium px-2 py-1 rounded-full"
+          style={{
+            backgroundColor:
+              rolUsuario === "admin"
+                ? temaOscuro
+                  ? "#dc2626"
+                  : "#fee2e2"
+                : temaOscuro
+                ? "#2563eb"
+                : "#dbeafe",
+            color:
+              rolUsuario === "admin"
+                ? temaOscuro
+                  ? "#fca5a5"
+                  : "#dc2626"
+                : temaOscuro
+                ? "#93c5fd"
+                : "#2563eb",
+          }}
+        >
+          {rolUsuario === "admin" ? "🔧 Admin" : "👤 Usuario"}
+        </span>
+      </div>
       <nav className="flex gap-4">
+        {/* Siempre mostrar Catálogo */}
         <button
           onClick={() => onNavegar("catalogo")}
           className="font-bold"
@@ -31,20 +60,73 @@ export default function Encabezado({
         >
           Catálogo
         </button>
+
+        {/* Mostrar Carrito solo para usuarios */}
+        {rolUsuario === "usuario" && (
+          <button
+            onClick={() => onNavegar("pago")}
+            className="font-bold"
+            style={{
+              color: temaOscuro
+                ? paginaActual === "pago"
+                  ? "#c4b5fd"
+                  : "#e9d5ff"
+                : paginaActual === "pago"
+                ? "#1d4ed8"
+                : "#374151",
+            }}
+          >
+            Carrito ({cantidadCarrito})
+          </button>
+        )}
+
+        {/* Mostrar opciones de admin solo para administradores */}
+        {rolUsuario === "admin" && (
+          <>
+            <button
+              onClick={() => onNavegar("admin")}
+              className="font-bold"
+              style={{
+                color: temaOscuro
+                  ? paginaActual === "admin"
+                    ? "#c4b5fd"
+                    : "#e9d5ff"
+                  : paginaActual === "admin"
+                  ? "#1d4ed8"
+                  : "#374151",
+              }}
+            >
+              Admin
+            </button>
+            <button
+              onClick={() => onNavegar("dashboard")}
+              className="font-bold"
+              style={{
+                color: temaOscuro
+                  ? paginaActual === "dashboard"
+                    ? "#c4b5fd"
+                    : "#e9d5ff"
+                  : paginaActual === "dashboard"
+                  ? "#1d4ed8"
+                  : "#374151",
+              }}
+            >
+              📊 Dashboard
+            </button>
+          </>
+        )}
+
+        {/* Botón para cambiar de rol */}
         <button
-          onClick={() => onNavegar("pago")}
-          className="font-bold"
+          onClick={onCambiarRol}
+          className="font-bold px-3 py-1 rounded-lg text-sm"
           style={{
-            color: temaOscuro
-              ? paginaActual === "pago"
-                ? "#c4b5fd"
-                : "#e9d5ff"
-              : paginaActual === "pago"
-              ? "#1d4ed8"
-              : "#374151",
+            backgroundColor: temaOscuro ? "#6b7280" : "#e5e7eb",
+            color: temaOscuro ? "#e9d5ff" : "#374151",
+            border: `1px solid ${temaOscuro ? "#9ca3af" : "#d1d5db"}`,
           }}
         >
-          Carrito ({cantidadCarrito})
+          Cambiar Rol
         </button>
       </nav>
       <button
